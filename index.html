@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>8Afutbolklubu — Официальный</title>
+  <style>
+    :root{
+      --bg:#060607;
+      --panel:#0b0b0c;
+      --accent:#ffd400;
+      --muted:#a1a1a1;
+      --glass: rgba(255,255,255,0.03);
+      --neon: 0 0 18px rgba(255,212,0,0.12), 0 0 40px rgba(255,212,0,0.04);
+      --radius:12px;
+      --shadow: 0 6px 20px rgba(0,0,0,0.6);
+      font-family: Inter, "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:linear-gradient(180deg, #050506 0%, var(--bg) 100%);
+      color:#eee;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:24px;
+    }
+
+    /* Header */
+    .header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:20px;
+      position:relative;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:56px;height:56px;border-radius:10px;
+      background:linear-gradient(135deg,#111,#222);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow: var(--neon), var(--shadow);
+      border:1px solid rgba(255,212,0,0.08);
+      font-weight:800;
+      color:var(--accent);
+      font-size:20px;
+      letter-spacing:1px;
+    }
+    .title{line-height:1}
+    .title h1{margin:0;font-size:18px}
+    .title p{margin:0;color:var(--muted);font-size:13px}
+
+    /* language switcher */
+    .lang {
+      display:flex; gap:8px; align-items:center;
+      position:absolute; right:92px; top:0;
+    }
+    .lang button {
+      background:transparent;border:1px solid rgba(255,255,255,0.04); color:var(--accent);
+      padding:6px 8px;border-radius:8px;cursor:pointer;font-weight:700;
+    }
+
+    /* Burger */
+    .burger{
+      width:52px;height:52px;border-radius:10px;background:var(--panel);
+      display:grid;place-items:center;cursor:pointer;border:1px solid rgba(255,255,255,0.03);
+      box-shadow: var(--neon);
+    }
+    .burger .bars{width:22px;height:2px;background:var(--accent);position:relative}
+    .burger .bars::before,.burger .bars::after{
+      content:"";position:absolute;left:0;width:22px;height:2px;background:var(--accent)
+    }
+    .burger .bars::before{top:-7px}
+    .burger .bars::after{top:7px}
+
+    /* Layout */
+    .container{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:20px;
+    }
+    @media (max-width:1100px){
+      .container{grid-template-columns:1fr; padding-bottom:80px}
+      .side{order:2}
+    }
+
+    /* Hero */
+    .hero{
+      background:linear-gradient(180deg, rgba(255,212,0,0.02), transparent);
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,212,0,0.04);
+      display:flex;
+      gap:18px;
+      align-items:center;
+      position:relative;
+    }
+    .match-card{flex:1;display:flex;gap:18px;align-items:center}
+    .team{min-width:110px;display:flex;flex-direction:column;align-items:center;gap:6px}
+    .team .crest{
+      width:82px;height:82px;border-radius:12px;display:grid;place-items:center;
+      background:linear-gradient(135deg,#0e0e0f,#151516);
+      color:var(--accent);font-weight:800;font-size:20px;border:1px solid rgba(255,212,0,0.06);
+    }
+    .score{font-size:44px;font-weight:800;color:var(--accent);text-shadow:0 6px 18px rgba(255,212,0,0.06);margin:0 10px}
+    .meta{color:var(--muted);font-size:13px}
+    .cta{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+    .cta .btn{background:linear-gradient(90deg,var(--accent),#ffea6a);color:#000;padding:10px 14px;border-radius:10px;font-weight:700;border:none;cursor:pointer;box-shadow:0 6px 30px rgba(255,212,0,0.12)}
+    .cta .sub{font-size:13px;color:var(--muted)}
+
+    /* Feed & cards */
+    .feed{margin-top:18px;display:grid;gap:12px}
+    .feed-top{display:flex;align-items:center;justify-content:space-between}
+    .pill{background:rgba(255,212,0,0.06);color:var(--accent);padding:6px 8px;border-radius:10px;font-weight:700}
+    .cards-grid{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    @media (max-width:1100px){
+      .cards-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:700px){
+      .cards-grid{grid-template-columns:repeat(1,1fr)}
+    }
+
+    .card{
+      background:var(--panel);border-radius:12px;padding:0;border:1px solid rgba(255,255,255,0.02);
+      display:flex;flex-direction:column;justify-content:space-between;box-shadow: var(--shadow);overflow:hidden;
+    }
+    .card .cover{width:100%;height:140px;object-fit:cover;background:#111}
+    .card .card-body{padding:12px;display:flex;justify-content:space-between;align-items:center}
+    .card .left{display:flex;gap:12px;align-items:center}
+    .card .date{font-size:12px;color:var(--muted)}
+    .card .info{font-weight:800;color:var(--accent)}
+    .card .small{color:var(--muted);font-size:13px}
+
+    /* Side bar (right) */
+    .side{position:sticky;top:24px;align-self:start;display:flex;flex-direction:column;gap:14px}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+    .players{display:grid;gap:8px}
+    .player{display:flex;gap:10px;align-items:center;padding:8px;border-radius:8px;background:linear-gradient(90deg, rgba(0,0,0,0.2), transparent)}
+    .player .avatar{width:44px;height:44px;border-radius:8px;background:#111;display:grid;place-items:center;color:var(--accent);font-weight:800}
+    .player .meta{font-size:13px}
+    .player .meta .name{font-weight:700}
+    .player .meta .role{color:var(--muted);font-size:12px}
+
+    /* popup */
+    .popup {
+      position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);
+      min-width:280px;max-width:90%;background:var(--panel);border-radius:10px;padding:16px;border:3px solid rgba(255,212,0,0.12);
+      display:none;z-index:9999;box-shadow:0 10px 40px rgba(0,0,0,0.6)
+    }
+    .popup h3{margin:0 0 8px 0;color:var(--accent)}
+    .popup .close{margin-top:12px;padding:10px;border-radius:8px;border:none;background:var(--accent);font-weight:800;cursor:pointer;color:#000;width:100%}
+
+    /* footer area */
+    .footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center;opacity:0.9}
+
+    /* slide menu */
+    .side-menu{position:fixed;top:0;right:-420px;height:100%;width:420px;background:linear-gradient(180deg,#080808,#0b0b0c);box-shadow:-20px 0 60px rgba(0,0,0,0.7);z-index:200;transition:right .32s ease;padding:28px;border-left:1px solid rgba(255,255,255,0.02)}
+    .side-menu.open{right:0}
+    .menu-close{position:absolute;left:18px;top:18px;background:transparent;border:none;color:var(--muted);font-size:18px;cursor:pointer}
+    .menu-list{display:flex;flex-direction:column;gap:12px;margin-top:28px}
+    .menu-item{padding:12px;border-radius:10px;color:var(--accent);background:linear-gradient(90deg, rgba(255,212,0,0.06), transparent);font-weight:700;cursor:pointer}
+    .menu-note{color:var(--muted);font-size:13px;margin-top:12px}
+
+    .glow{box-shadow:var(--neon)}
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="brand">
+      <div class="logo glow">8A</div>
+      <div class="title">
+        <h1 data-i18n="siteTitle">8Afutbolklubu</h1>
+        <p data-i18n="tagline">Official — Black × Yellow • Modern</p>
+      </div>
+    </div>
+
+    <div class="lang">
+      <button onclick="setLang('az')">AZ</button>
+      <button onclick="setLang('ru')">RU</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+
+    <div style="display:flex;gap:12px;align-items:center">
+      <div class="muted" data-i18n="lastMatchLabel" style="font-size:13px">Последний матч</div>
+      <div class="burger" id="burger" title="Меню">
+        <div class="bars"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- main column -->
+    <main>
+      <!-- HERO (last match taken from first .card) -->
+      <section class="hero" id="hero">
+        <div class="match-card">
+          <div class="team">
+            <div class="crest" id="hero-team1crest">8A</div>
+            <div class="muted" id="hero-team1name">8Afutbolklubu</div>
+          </div>
+
+          <div style="text-align:center">
+            <div style="display:flex;align-items:center;justify-content:center">
+              <div class="score" id="hero-score" onclick="openStatFromHero()">13 — 5</div>
+            </div>
+            <div class="meta" id="hero-meta">20 мая 2025 • Физра • Победа</div>
+            <div style="margin-top:8px;color:var(--muted)" id="hero-summary">Твои 6 гола • 7 ассистов</div>
+          </div>
+
+          <div class="team" style="align-items:flex-end">
+            <div class="crest" id="hero-team2crest" style="background:linear-gradient(135deg,#111,#1a1a1a);color:#fff">RIV</div>
+            <div class="muted" id="hero-team2name">Rival FC</div>
+          </div>
+        </div>
+
+        <div class="cta">
+          <button class="btn" onclick="alert('Отчёт матча — в следующей версии будет страница')"><span data-i18n="matchReportBtn">Отчёт матча</span></button>
+          <div class="sub muted" id="hero-mvp">MVP: Ты — 13 Г/А</div>
+        </div>
+      </section>
+
+      <!-- feed -->
+      <div class="feed" style="margin-top:18px">
+        <div class="feed-top">
+          <h3 style="margin:0" data-i18n="latestGames">Последние игры</h3>
+          <div class="pill" id="matches-count">Всего матчей: 6</div>
+        </div>
+
+        <!-- CARDS GRID: редактируй содержимое карточек вручную. Первая карточка = последний матч -->
+        <div class="cards-grid">
+
+          <!-- Пример карточки: 
+               - data-score: текст счёта (отобразится в hero при первой карточке)
+               - data-stat: текст для попапа (можно писать на нужном языке прямо здесь)
+               - data-date, data-type, data-team1, data-team2, data-mvp
+               - внутри .cover можно поставить <img src="..."> либо оставить фон
+          -->
+          <div class="card" 
+               data-date="20.05.2025"
+               data-team1="8Afutbolklubu"
+               data-team2="Rival FC"
+               data-score="13 — 5"
+               data-type="Физра"
+               data-mvp="Ты — 13 Г/А"
+               data-stat="Ты — 6 голов, 7 ассистов\nДруг — 5 голов, 6 ассистов\nЗащитник — 1 гол">
+            <div class="cover" style="background-image:url('game1.jpg');background-size:cover;background-position:center"></div>
+            <div class="card-body">
+              <div class="left">
+                <div>
+                  <div class="date">20.05.2025</div>
+                </div>
+                <div>
+                  <div class="info">8Afutbolklubu <strong style="color:var(--accent)">13 — 5</strong> Rival FC</div>
+                  <div class="small">6 гол/7 ассисты (Ты), 5 гол/6 ассист (Друг)</div>
+                </div>
+              </div>
+              <div class="muted">Физра — победа</div>
+            </div>
+          </div>
+
+          <!-- Карточка 2 -->
+          <div class="card"
+               data-date="11.05.2025"
+               data-team1="8Afutbolklubu"
+               data-team2="Opponents"
+               data-score="4 — 2"
+               data-type="Товарищеский"
+               data-mvp="Ты — 4 гола"
+               data-stat="Ты — 4 гола">
+            <div class="cover" style="background-image:url('game2.jpg');background-size:cover;background-position:center"></div>
+            <div class="card-body">
+              <div class="left">
+                <div><div class="date">11.05.2025</div></div>
+                <div><div class="info">8Afutbolklubu <strong style="color:var(--accent)">4 — 2</strong> Opponents</div><div class="small">Игрок матча: Ты — 4 гола</div></div>
+              </div>
+              <div class="muted">Товарищеский</div>
+            </div>
+          </div>
+
+          <!-- Карточка 3 -->
+          <div class="card"
+               data-date="04.05.2025"
+               data-team1="8Afutbolklubu"
+               data-team2="Tough FC"
+               data-score="2 — 3"
+               data-type="Турнир"
+               data-mvp="Друг — 2 Г/А"
+               data-stat="Tough game">
+            <div class="cover" style="background-image:url('game3.jpg');background-size:cover;background-position:center"></div>
+            <div class="card-body">
+              <div class="left">
+                <div><div class="date">04.05.2025</div></div>
+                <div><div class="info">8Afutbolklubu <strong style="color:var(--accent)">2 — 3</strong> Tough FC</div><div class="small">Тяжёлая игра</div></div>
+              </div>
+              <div class="muted">Турнир</div>
+            </div>
+          </div>
+
+          <!-- Карточка 4 (пример) -->
+          <div class="card"
+               data-date="27.04.2025"
+               data-team1="8Afutbolklubu"
+               data-team2="Wolves"
+               data-score="9 — 1"
+               data-type="Дружеский"
+               data-mvp="Elvin — 4 Г"
+               data-stat="Elvin — 4 гола">
+            <div class="cover" style="background-image:url('game4.jpg');background-size:cover;background-position:center"></div>
+            <div class="card-body">
+              <div class="left">
+                <div><div class="date">27.04.2025</div></div>
+                <div><div class="info">8Afutbolklubu <strong style="color:var(--accent)">9 — 1</strong> Wolves</div><div class="small">MVP: Elvin</div></div>
+              </div>
+              <div class="muted">Дружеский</div>
+            </div>
+          </div>
+
+          <!-- Карточка 5 (пример) -->
+          <div class="card"
+               data-date="15.04.2025"
+               data-team1="8Afutbolklubu"
+               data-team2="Tigers"
+               data-score="5 — 2"
+               data-type="Турнир"
+               data-mvp="Kamran"
+               data-stat="Kamran — 2 гола">
+            <div class="cover" style="background-image:url('game5.jpg');background-size:cover;background-position:center"></div>
+            <div class="card-body">
+              <div class="left">
+                <div><div class="date">15.04.2025</div></div>
+                <div><div class="info">8Afutbolklubu <strong style="color:var(--accent)">5 — 2</strong> Tigers</div><div class="small">MVP: Kamran</div></div>
+              </div>
+              <div class="muted">Турнир</div>
+            </div>
+          </div>
+
+          <!-- Карточка 6 (пример) -->
+          <div class="card"
+               data-date="01.04.2025"
+               data-team1="8Afutbolklubu"
+               data-team2="Rangers"
+               data-score="3 — 3"
+               data-type="Товарищеский"
+               data-mvp="—"
+               data-stat="Draw match">
+            <div class="cover" style="background-image:url('game6.jpg');background-size:cover;background-position:center"></div>
+            <div class="card-body">
+              <div class="left">
+                <div><div class="date">01.04.2025</div></div>
+                <div><div class="info">8Afutbolklubu <strong style="color:var(--accent)">3 — 3</strong> Rangers</div><div class="small">Ничья</div></div>
+              </div>
+              <div class="muted">Товарищеский</div>
+            </div>
+          </div>
+
+        </div><!-- /.cards-grid -->
+
+      </div><!-- /.feed -->
+
+      <div class="footer">
+        © 8Afutbolklubu — создано с любовью. Для правок: редактируй карточки в HTML (первую карточку — последний матч).
+      </div>
+    </main>
+
+    <!-- side column -->
+    <aside class="side">
+      <div class="panel">
+        <h4 style="margin:0 0 8px 0" data-i18n="topPlayers">Топ-игроки</h4>
+        <div class="players" id="top-players">
+          <div class="player"><div class="avatar">8A</div><div class="meta"><div class="name">Ты</div><div class="role">ПЗ/ЦП — 13 Г/А (сегодня)</div></div></div>
+          <div class="player"><div class="avatar">FR</div><div class="meta"><div class="name">Друг</div><div class="role">ПЗ — 11 Г/А</div></div></div>
+          <div class="player"><div class="avatar">DZ</div><div class="meta"><div class="name">Защитник</div><div class="role">ЦЗ — 1 гол</div></div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h4 style="margin:0 0 8px 0" data-i18n="seasonStats">Статистика сезона</h4>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-weight:800;font-size:18px" id="season-total">52</div>
+            <div class="muted" style="font-size:13px" data-i18n="goalsAssists">Голы/Ассисты (ты)</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-weight:700;color:var(--accent)" id="season-rank">4 место</div>
+            <div class="muted" data-i18n="byRating">по рейтингу</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel center">
+        <div style="font-size:13px;color:var(--muted)" data-i18n="wantMerch">Хотите мерч?</div>
+        <button class="btn" style="margin-top:8px" onclick="alert('Магазин мерча скоро будет доступен')" data-i18n="shopBtn">Магазин</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- popup -->
+  <div class="popup" id="popup">
+    <h3 data-i18n="popupTitle">Статистика игры</h3>
+    <div id="popup-body" style="white-space:pre-wrap;color:#ddd;font-size:14px;margin-top:8px"></div>
+    <button class="close" onclick="closePopup()" data-i18n="closeBtn">Закрыть</button>
+  </div>
+
+  <!-- side menu -->
+  <div class="side-menu" id="menu">
+    <button class="menu-close" onclick="toggleMenu()">✕</button>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:54px;height:54px;border-radius:10px;background:#111;display:grid;place-items:center;color:var(--accent);font-weight:800">8A</div>
+      <div><div style="font-weight:800">8Afutbolklubu</div><div class="muted" style="font-size:13px" data-i18n="official">Официальный сайт</div></div>
+    </div>
+    <nav class="menu-list">
+      <div class="menu-item" onclick="alert('Игроки — в реальной версии откроется страница со списком')" data-i18n="menuPlayers">Игроки</div>
+      <div class="menu-item" onclick="alert('Статистика игроков — графики и таблицы здесь')" data-i18n="menuStats">Статистика игроков</div>
+      <div class="menu-item" onclick="alert('Новости — лента последних игр')" data-i18n="menuNews">Новости</div>
+      <div class="menu-item" onclick="alert('Магазин мерча — откроется скоро')" data-i18n="menuMerch">Мерч / Магазин</div>
+      <div class="menu-item" onclick="alert('Контакты и связь')" data-i18n="menuContacts">Контакты</div>
+    </nav>
+    <div class="menu-note" data-i18n="menuNote">Добавляй разделы в меню по мере развития команды.</div>
+  </div>
+
+  <script>
+    // --- menu toggle
+    const menu = document.getElementById('menu');
+    const burger = document.getElementById('burger');
+    function toggleMenu(){ menu.classList.toggle('open'); }
+    burger.addEventListener('click', toggleMenu);
+
+    // --- popup logic
+    const popup = document.getElementById('popup');
+    const popupBody = document.getElementById('popup-body');
+
+    function openPopup(text){
+      popupBody.textContent = text || '—';
+      popup.style.display = 'block';
+    }
+    function closePopup(){ popup.style.display = 'none'; }
+
+    // When clicking on a card, open popup with card's data-stat
+    document.addEventListener('click', function(e){
+      // click on inside card (either cover or body)
+      const card = e.target.closest('.card');
+      if(card){
+        // open popup with data-stat
+        const stat = card.getAttribute('data-stat') || 'Статистика отсутствует';
+        openPopup(stat);
+      }
+    });
+
+    // Hero's score opens popup based on first card
+    function openStatFromHero(){
+      const first = document.querySelector('.cards-grid .card');
+      if(first){
+        openPopup(first.getAttribute('data-stat') || 'Статистика отсутствует');
+      }
+    }
+
+    // --- Auto-fill hero from first card (so you edit only cards)
+    function updateHeroFromFirstCard(){
+      const first = document.querySelector('.cards-grid .card');
+      if(!first) return;
+      const team1 = first.getAttribute('data-team1') || '';
+      const team2 = first.getAttribute('data-team2') || '';
+      const score = first.getAttribute('data-score') || '';
+      const date = first.getAttribute('data-date') || '';
+      const type = first.getAttribute('data-type') || '';
+      const mvp = first.getAttribute('data-mvp') || '';
+      const statSummary = first.getAttribute('data-stat') || '';
+
+      document.getElementById('hero-team1name').textContent = team1;
+      document.getElementById('hero-team2name').textContent = team2;
+      document.getElementById('hero-score').textContent = score;
+      document.getElementById('hero-meta').textContent = (date ? date + ' • ' : '') + (type ? type + ' • ' : '') + (score ? 'Результат' : '');
+      document.getElementById('hero-mvp').textContent = (mvp ? ('MVP: ' + mvp) : '');
+      // short summary - you can set custom summary in data-stat or edit below:
+      document.getElementById('hero-summary').textContent = statSummary.split('\n')[0] || '';
+      // crest placeholders: if you want images, replace content of hero-team1crest / hero-team2crest with <img> tags.
+    }
+
+    // --- count matches
+    function updateMatchesCount(){
+      const total = document.querySelectorAll('.cards-grid .card').length;
+      document.getElementById('matches-count').textContent = 'Всего матчей: ' + total;
+      // show season totals etc if you want to compute automatically (left as manual now)
+    }
+
+    // --- i18n: simple translations for UI labels (you can expand)
+    const i18n = {
+      ru: {
+        siteTitle: '8Afutbolklubu',
+        tagline: 'Official — Black × Yellow • Modern',
+        lastMatchLabel: 'Последний матч',
+        matchReportBtn: 'Отчёт матча',
+        latestGames: 'Последние игры',
+        topPlayers: 'Топ-игроки',
+        seasonStats: 'Статистика сезона',
+        goalsAssists: 'Голы/Ассисты (ты)',
+        byRating: 'по рейтингу',
+        wantMerch: 'Хотите мерч?',
+        shopBtn: 'Магазин',
+        popupTitle: 'Статистика игры',
+        closeBtn: 'Закрыть',
+        official: 'Официальный сайт',
+        menuPlayers: 'Игроки',
+        menuStats: 'Статистика игроков',
+        menuNews: 'Новости',
+        menuMerch: 'Мерч / Магазин',
+        menuContacts: 'Контакты',
+        menuNote: 'Добавляй разделы в меню по мере развития команды'
+      },
+      en: {
+        siteTitle: '8Afutbolklubu',
+        tagline: 'Official — Black × Yellow • Modern',
+        lastMatchLabel: 'Latest match',
+        matchReportBtn: 'Match report',
+        latestGames: 'Latest games',
+        topPlayers: 'Top players',
+        seasonStats: 'Season stats',
+        goalsAssists: 'Goals/Assists (you)',
+        byRating: 'by rating',
+        wantMerch: 'Want merch?',
+        shopBtn: 'Shop',
+        popupTitle: 'Match stats',
+        closeBtn: 'Close',
+        official: 'Official site',
+        menuPlayers: 'Players',
+        menuStats: 'Player stats',
+        menuNews: 'News',
+        menuMerch: 'Merch / Shop',
+        menuContacts: 'Contacts',
+        menuNote: 'Add sections as the team grows'
+      },
+      az: {
+        siteTitle: '8Afutbolklubu',
+        tagline: 'Rəsmi — Qara × Sarı • Modern',
+        lastMatchLabel: 'Son oyun',
+        matchReportBtn: 'Oyun hesabatı',
+        latestGames: 'Son oyunlar',
+        topPlayers: 'Ən yaxşı oyunçular',
+        seasonStats: 'Mövsüm statistika',
+        goalsAssists: 'Qollar/Assistlər (sən)',
+        byRating: 'reytinq üzrə',
+        wantMerch: 'Merç istərsiniz?',
+        shopBtn: 'Mağaza',
+        popupTitle: 'Oyun statistikası',
+        closeBtn: 'Bağla',
+        official: 'Rəsmi sayt',
+        menuPlayers: 'Oyunçular',
+        menuStats: 'Oyunçu statistika',
+        menuNews: 'Xəbərlər',
+        menuMerch: 'Merç / Mağaza',
+        menuContacts: 'Əlaqə',
+        menuNote: 'Komanda böyüdükcə menyuya bölmələr əlavə et'
+      }
+    };
+
+    function setLang(lang){
+      // find all elements with data-i18n and set textContent
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        if(i18n[lang] && i18n[lang][key]) el.textContent = i18n[lang][key];
+      });
+      // popup title and close button
+      document.querySelector('#popup h3').textContent = i18n[lang].popupTitle;
+      document.querySelector('#popup .close').textContent = i18n[lang].closeBtn;
+      // update matches (static content inside cards remains manual - you can fill data-stat in desired language)
+    }
+
+    // initial setup
+    updateHeroFromFirstCard();
+    updateMatchesCount();
+    setLang('ru'); // default ru
+
+    // If you later edit cards and want to refresh hero/count:
+    // call updateHeroFromFirstCard(); updateMatchesCount();
+
+  </script>
+</body>
+</html>
